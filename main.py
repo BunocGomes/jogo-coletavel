@@ -1,7 +1,8 @@
 # main.py
 
 import pygame
-from settings import SCREEN_WIDTH, SCREEN_HEIGHT, FPS, WHITE, COIN_SOUND, KEY_SOUND, DIAMOND_SOUND, PORTAL_SOUND
+import os
+from settings import SCREEN_WIDTH, SCREEN_HEIGHT, FPS, WHITE, COIN_SOUND, KEY_SOUND, DIAMOND_SOUND, PORTAL_SOUND, BACKGROUNDS_DIR
 from player import Player
 from inventory import Inventory
 from level import LevelTree
@@ -15,19 +16,41 @@ key_sound = pygame.mixer.Sound(KEY_SOUND)
 diamond_sound = pygame.mixer.Sound(DIAMOND_SOUND)
 portal_sound = pygame.mixer.Sound(PORTAL_SOUND)
 
+# Configurações da tela
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Meu Jogo")
 clock = pygame.time.Clock()
 
+# Carrega os cenários
+background1 = pygame.image.load(os.path.join(BACKGROUNDS_DIR, 'background1.png'))
+background2 = pygame.image.load(os.path.join(BACKGROUNDS_DIR, 'background2.png'))
+background3 = pygame.image.load(os.path.join(BACKGROUNDS_DIR, 'background3.png'))
+
+# Inicializa o jogador, inventário e árvore de níveis
 player = Player()
 inventory = Inventory()
 level_tree = LevelTree()
 current_level_node = level_tree.root  # Começa no nível 1
 
+# Grupo de sprites
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
 all_sprites.add(current_level_node.collectibles)
 
+# Adiciona o portal ao grupo de sprites
+if current_level_node.portal:
+    all_sprites.add(current_level_node.portal)
+
+# Função para desenhar o fundo correspondente ao nível atual
+def draw_background():
+    if current_level_node.level_num == 1:
+        screen.blit(background1, (0, 0))
+    elif current_level_node.level_num == 2:
+        screen.blit(background2, (0, 0))
+    elif current_level_node.level_num == 3:
+        screen.blit(background3, (0, 0))
+
+# Loop principal do jogo
 running = True
 while running:
     clock.tick(FPS)
@@ -35,6 +58,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
+    # Atualiza o jogador
     keys = pygame.key.get_pressed()
     player.update(keys)
 
@@ -62,15 +86,17 @@ while running:
                 current_level_node = current_level_node.left
             elif current_level_node.right:
                 current_level_node = current_level_node.right
+
+            # Atualiza os sprites para o novo nível
+            all_sprites.empty()
+            all_sprites.add(player)
             all_sprites.add(current_level_node.collectibles)
             if current_level_node.portal:
                 all_sprites.add(current_level_node.portal)
 
-    # Desenha tudo na tela
-    screen.fill(WHITE)
+    # Desenha o fundo e os sprites
+    draw_background()
     all_sprites.draw(screen)
-    if current_level_node.portal:
-        screen.blit(current_level_node.portal.image, current_level_node.portal.rect)
     pygame.display.flip()
 
 pygame.quit()

@@ -21,6 +21,7 @@ TILE_SIZE = 32
 ASSETS_DIR = os.path.join(os.path.dirname(__file__), 'assets')
 IMAGES_DIR = os.path.join(ASSETS_DIR, 'images')
 SOUNDS_DIR = os.path.join(ASSETS_DIR, 'sounds')
+BACKGROUNDS_DIR = os.path.join(ASSETS_DIR, 'backgrounds')  # Nova constante
 
 # Carregar imagens
 PLAYER_IMAGE = os.path.join(IMAGES_DIR, 'player.png')

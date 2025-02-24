@@ -9,10 +9,12 @@ from scipy.io.wavfile import write
 ASSETS_DIR = os.path.join(os.path.dirname(__file__), 'assets')
 IMAGES_DIR = os.path.join(ASSETS_DIR, 'images')
 SOUNDS_DIR = os.path.join(ASSETS_DIR, 'sounds')
+BACKGROUNDS_DIR = os.path.join(ASSETS_DIR, 'backgrounds')
 
 # Cria as pastas se não existirem
 os.makedirs(IMAGES_DIR, exist_ok=True)
 os.makedirs(SOUNDS_DIR, exist_ok=True)
+os.makedirs(BACKGROUNDS_DIR, exist_ok=True)
 
 # Inicializa o Pygame
 pygame.init()
@@ -77,8 +79,29 @@ def generate_sounds():
     portal_sound = generate_beep(880, 1.0)  # Som descendente
     write(os.path.join(SOUNDS_DIR, 'portal_open.wav'), sample_rate, portal_sound)
 
+# Função para gerar cenários
+def generate_backgrounds():
+    # Tamanho do cenário
+    size = (800, 600)  # Tamanho da tela
+
+    # Cenário do nível 1 (fundo verde)
+    background1 = pygame.Surface(size)
+    background1.fill((0, 100, 0))  # Verde escuro
+    pygame.image.save(background1, os.path.join(BACKGROUNDS_DIR, 'background1.png'))
+
+    # Cenário do nível 2 (fundo azul)
+    background2 = pygame.Surface(size)
+    background2.fill((0, 0, 100))  # Azul escuro
+    pygame.image.save(background2, os.path.join(BACKGROUNDS_DIR, 'background2.png'))
+
+    # Cenário do nível 3 (fundo vermelho)
+    background3 = pygame.Surface(size)
+    background3.fill((100, 0, 0))  # Vermelho escuro
+    pygame.image.save(background3, os.path.join(BACKGROUNDS_DIR, 'background3.png'))
+
 # Gera os assets
 generate_images()
 generate_sounds()
+generate_backgrounds()
 
 print("Assets gerados com sucesso!")

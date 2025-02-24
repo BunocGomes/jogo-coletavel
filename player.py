@@ -1,6 +1,5 @@
-
 import pygame
-from settings import PLAYER_IMAGE, TILE_SIZE, SCREEN_HEIGHT, SCREEN_WIDTH
+from settings import PLAYER_IMAGE, TILE_SIZE, SCREEN_WIDTH, SCREEN_HEIGHT
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):

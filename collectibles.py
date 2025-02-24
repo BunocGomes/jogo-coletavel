@@ -1,5 +1,3 @@
-# collectibles.py
-
 import pygame
 from settings import COIN_IMAGE, KEY_IMAGE, DIAMOND_IMAGE, PORTAL_IMAGE, TILE_SIZE
 
