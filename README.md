@@ -4,7 +4,7 @@ Este é um jogo simples de aventura onde o jogador deve coletar itens, como moed
 Estrutura do Projeto
 A estrutura do projeto é a seguinte:
 
-bash
+```bash
 game_project/
 │
 ├── assets/
