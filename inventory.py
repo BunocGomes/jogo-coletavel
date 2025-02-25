@@ -2,18 +2,20 @@
 
 class Inventory:
     def __init__(self):
-        self.slots = [None] * 9
+        # Usa um dicionário para armazenar a quantidade de cada tipo de item
+        self.items = {
+            'coin': 0,
+            'key': 0,
+            'diamond': 0
+        }
 
     def add_item(self, item):
-        for i in range(len(self.slots)):
-            if self.slots[i] is None:
-                self.slots[i] = item
-                break
-
-    def organize(self):
-        self.slots.sort(key=lambda x: x.type if x else '')
+        # Adiciona o item ao inventário
+        if item.type in self.items:
+            self.items[item.type] += 1
 
     def display(self):
+        # Exibe o inventário
         print("Inventário:")
-        for i, item in enumerate(self.slots):
-            print(f"Slot {i+1}: {item.type if item else 'Vazio'}")
+        for item_type, quantity in self.items.items():
+            print(f"{item_type.capitalize()}: {quantity}")
